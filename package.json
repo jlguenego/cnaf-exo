@@ -1,0 +1,15 @@
+{
+  "name": "exo",
+  "version": "0.0.1",
+  "description": "exo pour CNAF",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cnaf",
+    "angular"
+  ],
+  "author": "Jean-Louis GUENEGO",
+  "license": "ISC"
+}
