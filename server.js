@@ -6,6 +6,16 @@ var ws = require('./webService.js');
 
 var app = express();
 
+// webpack
+var webpack = require('webpack');
+var webpackConfig = require('./webpack.config.js');
+webpackConfig.output.path = '/';
+var compiler = webpack(webpackConfig);
+var webpackDevMiddleware = require('webpack-dev-middleware');
+app.use('/app/wpk/', webpackDevMiddleware(compiler, {
+    // options
+}));
+
 app.use('/ws', ws);
 
 app.use(express.static('.'));

@@ -1,66 +1,68 @@
-(function () {
-	'use strict';
+'use strict';
 
-	var app = angular.module('cnaf-route', ['ui.router']);
+var accueilUrl = require('./tmpl/accueil.html');
+var produitUrl = require('./tmpl/produit.html');
+var serviceUrl = require('./tmpl/service.html');
+var contactUrl = require('./tmpl/contact.html');
 
-	app.config(['$locationProvider', '$stateProvider', function ($locationProvider, $stateProvider) {
-		$locationProvider
-			.html5Mode(true);
+var app = angular.module('cnaf-route', ['ui.router']);
 
-
-		var accueilState = {
-			name: 'accueil',
-			url: '/',
-			templateUrl: 'cnaf-route/tmpl/accueil.html'
-		};
-
-		var produitState = {
-			name: 'produit',
-			url: '/produit',
-			templateUrl: 'cnaf-route/tmpl/produit.html',
-			controller: 'ProductCtrl'
-		};
-
-		var serviceState = {
-			name: 'service',
-			url: '/service',
-			templateUrl: 'cnaf-route/tmpl/service.html'
-		};
-
-		var contactState = {
-			name: 'contact',
-			url: '/contact',
-			templateUrl: 'cnaf-route/tmpl/contact.html'
-		};
+app.config(['$locationProvider', '$stateProvider', function ($locationProvider, $stateProvider) {
+	$locationProvider
+		.html5Mode(true);
 
 
-		$stateProvider.state(accueilState);
-		$stateProvider.state(produitState);
-		$stateProvider.state(serviceState);
-		$stateProvider.state(contactState);
-	}]);
+	var accueilState = {
+		name: 'accueil',
+		url: '/',
+		templateUrl: accueilUrl
+	};
+
+	var produitState = {
+		name: 'produit',
+		url: '/produit',
+		templateUrl: produitUrl,
+		controller: 'ProductCtrl'
+	};
+
+	var serviceState = {
+		name: 'service',
+		url: '/service',
+		templateUrl: serviceUrl
+	};
+
+	var contactState = {
+		name: 'contact',
+		url: '/contact',
+		templateUrl: contactUrl
+	};
+
+
+	$stateProvider.state(accueilState);
+	$stateProvider.state(produitState);
+	$stateProvider.state(serviceState);
+	$stateProvider.state(contactState);
+}]);
+
+app.controller('ProductCtrl', ['$log', '$http', '$q','$rootScope', function($log, $http, $q, $rootScope) {
+	$log.debug('ProductCtrl', arguments);
+	$http.get('../ws/s1').then(function(response) {
+		console.log('response', response);
+		$rootScope.showSpinner = true;
+		return $q.all([
+			$http.get('../ws/s2'), 
+			$http.get('../ws/s3'), 
+			$http.get('../ws/s4')]);
+	}).then(function(responses) {
+		console.log('responses', responses);
+		return $http.get('../ws/s5');
+	}).then(function(response) {
+		console.log('response', response);	
+	}).finally(function() {
+		$rootScope.showSpinner = false;
+	}).catch(function(error) {
+		console.error('error', error);
+	});
 	
-	app.controller('ProductCtrl', ['$http', '$q','$rootScope', function($http, $q, $rootScope) {
-		console.log('ProductCtrl', arguments);
-		$http.get('../ws/s1').then(function(response) {
-			console.log('response', response);
-			$rootScope.showSpinner = true;
-			return $q.all([
-				$http.get('../ws/s2'), 
-				$http.get('../ws/s3'), 
-				$http.get('../ws/s4')]);
-		}).then(function(responses) {
-			console.log('responses', responses);
-			return $http.get('../ws/s5');
-		}).then(function(response) {
-			console.log('response', response);	
-		}).finally(function() {
-			$rootScope.showSpinner = false;
-		}).catch(function(error) {
-			console.error('error', error);
-		});
-		
-	}]);
+}]);
 
-
-})();
