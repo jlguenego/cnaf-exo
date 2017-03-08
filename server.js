@@ -2,8 +2,11 @@
 
 var express = require('express'); // charge ExpressJS
 var serveIndex = require('serve-index');
+var ws = require('./webService.js');
 
 var app = express();
+
+app.use('/ws', ws);
 
 app.use(express.static('.'));
 app.use(serveIndex('.', {icons: true}));
