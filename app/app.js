@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var app = angular.module('main', ['cnaf-route']);
+	var app = angular.module('main', ['cnaf-route', 'angularSpinner']);
 
 	app.directive('cafHeader', function() {
 		return {

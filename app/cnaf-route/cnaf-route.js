@@ -40,10 +40,11 @@
 		$stateProvider.state(contactState);
 	}]);
 	
-	app.controller('ProductCtrl', ['$http', '$q', function($http, $q) {
+	app.controller('ProductCtrl', ['$http', '$q','$rootScope', function($http, $q, $rootScope) {
 		console.log('ProductCtrl', arguments);
 		$http.get('../ws/s1').then(function(response) {
 			console.log('response', response);
+			$rootScope.showSpinner = true;
 			return $q.all([
 				$http.get('../ws/s2'), 
 				$http.get('../ws/s3'), 
@@ -53,6 +54,7 @@
 			return $http.get('../ws/s5');
 		}).then(function(response) {
 			console.log('response', response);	
+			$rootScope.showSpinner = false;
 		}).catch(function(error) {
 			console.error('error', error);
 		});
