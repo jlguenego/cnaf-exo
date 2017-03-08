@@ -54,6 +54,7 @@
 			return $http.get('../ws/s5');
 		}).then(function(response) {
 			console.log('response', response);	
+		}).finally(function() {
 			$rootScope.showSpinner = false;
 		}).catch(function(error) {
 			console.error('error', error);
