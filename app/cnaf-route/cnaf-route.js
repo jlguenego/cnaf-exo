@@ -12,13 +12,13 @@ app.config(['$locationProvider', '$stateProvider', function ($locationProvider, 
 		.html5Mode(true);
 
 
-	var accueilState = {
+	const accueilState = {
 		name: 'accueil',
 		url: '/',
 		templateUrl: accueilUrl
 	};
 
-	var produitState = {
+	let produitState = {
 		name: 'produit',
 		url: '/produit',
 		templateUrl: produitUrl,
@@ -46,6 +46,10 @@ app.config(['$locationProvider', '$stateProvider', function ($locationProvider, 
 
 app.controller('ProductCtrl', ['$log', '$http', '$q','$rootScope', function($log, $http, $q, $rootScope) {
 	$log.debug('ProductCtrl', arguments);
+	var x = [1, 2, 3];
+	x.forEach((n, i) => {
+		console.log('n i', n, i);
+	});
 	$http.get('../ws/s1').then(function(response) {
 		console.log('response', response);
 		$rootScope.showSpinner = true;
@@ -53,7 +57,7 @@ app.controller('ProductCtrl', ['$log', '$http', '$q','$rootScope', function($log
 			$http.get('../ws/s2'), 
 			$http.get('../ws/s3'), 
 			$http.get('../ws/s4')]);
-	}).then(function(responses) {
+	}).then((responses) => {
 		console.log('responses', responses);
 		return $http.get('../ws/s5');
 	}).then(function(response) {

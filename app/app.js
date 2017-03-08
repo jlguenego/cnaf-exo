@@ -1,9 +1,12 @@
 'use strict';
 
 require('angular/angular.js');
+require('angular/angular-csp.css');
 require('angular-ui-router');
 require('angular-spinner');
 require('./cnaf-route/cnaf-route.js');
+
+require('./styles.scss');
 
 var cafHeaderUrl = require('./tmpl/caf-header.html');
 var cafBodyUrl = require('./tmpl/caf-body.html');
