@@ -17,7 +17,8 @@
 		var produitState = {
 			name: 'produit',
 			url: '/produit',
-			templateUrl: 'cnaf-route/tmpl/produit.html'
+			templateUrl: 'cnaf-route/tmpl/produit.html',
+			controller: 'ProductCtrl'
 		};
 
 		var serviceState = {
@@ -37,6 +38,16 @@
 		$stateProvider.state(produitState);
 		$stateProvider.state(serviceState);
 		$stateProvider.state(contactState);
+	}]);
+	
+	app.controller('ProductCtrl', ['$http', function($http) {
+		console.log('ProductCtrl', arguments);
+		$http.get('../ws/s1').then(function(response) {
+			console.log('response', response);
+		}).catch(function(error) {
+			console.error('error', error);
+		});
+		
 	}]);
 
 
